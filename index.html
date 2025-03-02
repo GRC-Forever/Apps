@@ -3,42 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Floating Timer Sidebar</title>
+  <title>Floating Digital Clock Timer</title>
   <style>
-    #floatingTimerSidebar {
+    /* Floating sidebar container */
+    #floatingClockSidebar {
       position: fixed;
       top: 100px;
       left: 20px;
-      width: 200px;
-      background-color: #f0f0f0;
-      padding: 10px;
-      border: 1px solid #ccc;
+      width: 220px;
+      text-align: center;
       z-index: 1000;
     }
-    #timerDisplay {
-      font-size: 16px;
-      font-weight: bold;
+
+    /* Digital clock display */
+    #clockDisplay {
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      background-color: #000;
+      color: #fff; /* Changed to white */
+      font-family: 'Courier New', monospace;
+      font-size: 36px;
+      border: 5px solid #333;
+      border-radius: 5px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      letter-spacing: 2px;
+    }
+
+    /* Buttons container */
+    #clockButtons {
+      margin-top: 10px;
+    }
+
+    /* Buttons styling */
+    button {
+      padding: 8px 16px;
+      margin: 0 5px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #555;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #777;
+    }
+
+    button:active {
+      background-color: #333;
     }
   </style>
 </head>
 <body>
-  <h1>My Basic Webpage</h1>
-  <p>This is a simple webpage hosted on GitHub Pages.</p>
-  <div id="floatingTimerSidebar">
-    <div id="timerDisplay">Timer: 00:00:00</div>
+  <!-- Floating digital clock sidebar -->
+  <div id="floatingClockSidebar">
+    <div id="clockDisplay">00:00:00</div>
+    <div id="clockButtons">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="stopTimer()">Stop</button>
+    </div>
   </div>
 
   <script>
     let seconds = 0;
-    function updateTimer() {
-      seconds++;
+    let timerInterval = null;
+    const clockDisplay = document.getElementById('clockDisplay');
+
+    function updateClock() {
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
       const secs = seconds % 60;
-      document.getElementById('timerDisplay').innerText = 
-        `Timer: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      clockDisplay.innerText = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-    setInterval(updateTimer, 1000);
+
+    function startTimer() {
+      if (timerInterval === null) { // Only start if timer isn't already running
+        timerInterval = setInterval(() => {
+          seconds++;
+          updateClock();
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) { // Only stop if timer is running
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    // Initialize clock display
+    updateClock();
   </script>
 </body>
 </html>

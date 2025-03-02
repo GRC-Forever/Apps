@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Timer Sidebar</title>
+  <style>
+    #floatingTimerSidebar {
+      position: fixed;
+      top: 100px;
+      left: 20px;
+      width: 200px;
+      background-color: #f0f0f0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      z-index: 1000;
+    }
+    #timerDisplay {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>My Basic Webpage</h1>
+  <p>This is a simple webpage hosted on GitHub Pages.</p>
+  <div id="floatingTimerSidebar">
+    <div id="timerDisplay">Timer: 00:00:00</div>
+  </div>
+
+  <script>
+    let seconds = 0;
+    function updateTimer() {
+      seconds++;
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      document.getElementById('timerDisplay').innerText = 
+        `Timer: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
